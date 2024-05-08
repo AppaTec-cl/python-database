@@ -16,7 +16,7 @@ class DAO(DataBase):
         super().__init__()
 
     def verUsuario(self, id):
-        sql = "SELECT usuario.id_usuario, usuario.rut, usuario.nombre, usuario.apellido_p, usuario.apellido_m, usuario.email, usuario.password, usuario.rol FROM usuario WHERE usuario.id_usuario = '"+str(id)+"'"
+        sql = "SELECT id_usuario, rut, nombre, apellido_p, apellido_m, email, password, rol FROM usuario WHERE id_usuario = '"+str(id)+"'"
         try:
             self.cursor.execute(sql)
             resultado = self.cursor.fetchone()
@@ -36,7 +36,7 @@ class DAO(DataBase):
             print("Error: ",str(e.args))
 
     def verUsuarios(self):
-        sql = "SELECT usuario.id_usuario, usuario.rut, usuario.nombre, usuario.apellido_p, usuario.apellido_m, usuario.email, usuario.password, usuario.rol FROM usuario"
+        sql = "SELECT id_usuario, rut, nombre, apellido_p, apellido_m, email, password, rol FROM usuario"
         try:
             self.cursor.execute(sql)
             resultado = self.cursor.fetchall()
@@ -57,7 +57,7 @@ class DAO(DataBase):
             print("Error: ",str(e.args))
 
     def verHistorial(self, id):
-        sql = "SELECT historial_contrato.id_historial_contrato, historial_contrato.id_contrato, historial_contrato.estado_anterior, historial_contrato.estado_nuevo, historial_contrato.fecha_cambio FROM historial_contrato WHERE historial_contrato.id_historial_contrato = '"+str(id)+"'"
+        sql = "SELECT id_historial_contrato, id_contrato, estado_anterior, estado_nuevo, fecha_cambio FROM historial_contrato WHERE id_historial_contrato = '"+str(id)+"'"
         try:
             self.cursor.execute(sql)
             resultado = self.cursor.fetchone()
@@ -75,7 +75,7 @@ class DAO(DataBase):
             print("Error: ",str(e.args))
     
     def verContrato(self, id):
-        sql = "SELECT contrato.id_contrato, contrato.id_usuario_trabajador, contrato.fecha_inicio, contrato.fecha_expiracion, contrato.tipo_contrato, contrato.contenido_contrato, contrato.estado, contrato.comentario FROM contrato WHERE contrato.id_contrato = '"+str(id)+"'"
+        sql = "SELECT id_contrato, id_usuario_trabajador, fecha_inicio, fecha_expiracion, tipo_contrato, contenido_contrato, estado, comentario FROM contrato WHERE id_contrato = '"+str(id)+"'"
         try:
             self.cursor.execute(sql)
             resultado = self.cursor.fetchone()
@@ -104,5 +104,3 @@ class DAO(DataBase):
             msg = "Error: ",str(e.args)
         
         return msg
-
-
