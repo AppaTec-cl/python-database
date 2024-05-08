@@ -104,3 +104,22 @@ class DAO(DataBase):
             msg = "Error: ",str(e.args)
         
         return msg
+
+    def verificar_id(self, id):
+        sql1 = "SELECT id_usuario FROM usuario WHERE id_usuario = %s"
+        sql2 = "SELECT id_contrato FROM contrato WHERE id_contrato = %s"
+        sql3 = "SELECT id_historial_contrato FROM historial_contrato WHERE id_historial_contrato = %s"
+
+        self.cursor.execute(sql1, (id,))
+        if self.cursor.fetchone() is not None:
+            return True
+
+        self.cursor.execute(sql2, (id,))
+        if self.cursor.fetchone() is not None:
+            return True
+
+        self.cursor.execute(sql3, (id,))
+        if self.cursor.fetchone() is not None:
+            return True
+
+        return False
