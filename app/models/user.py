@@ -1,5 +1,5 @@
 from .. import db
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash
 from sqlalchemy.ext.hybrid import hybrid_property
 
 class User(db.Model):
@@ -34,5 +34,5 @@ class User(db.Model):
         self.apellido_m = apellido_m
         self.correo_electronico = correo_electronico
         self.rol = rol
-        self.password = generate_password_hash(password)
+        self.password = password
         self.id_usuario = self.id
