@@ -18,9 +18,7 @@ class User(db.Model):
     
     @hybrid_property
     def id(self):
-        # Extrae la parte numérica antes del guión en el RUT
         numeric_part = self.rut.split('-')[0]
-        # Toma los últimos 6 dígitos
         return int(numeric_part[-6:])
     
     @id.setter
