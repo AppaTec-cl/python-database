@@ -3,13 +3,13 @@ from werkzeug.security import check_password_hash
 from sqlalchemy.ext.hybrid import hybrid_property
 
 class User(db.Model):
-    __tablename__ = 'usuario'
-    id_usuario = db.Column(db.Integer, primary_key=True)
+    __tablename__ = 'USUARIO'
+    id_usuario = db.Column(db.String(6), primary_key=True)
     rut = db.Column(db.String(10), nullable=False, unique=True)
-    nombres = db.Column(db.String(50), nullable=False)
-    apellido_p = db.Column(db.String(50), nullable=False)
-    apellido_m = db.Column(db.String(50), nullable=False)
-    correo_electronico = db.Column(db.String(100), nullable=False)
+    nombres = db.Column(db.String(40), nullable=False)
+    apellido_p = db.Column(db.String(20), nullable=False)
+    apellido_m = db.Column(db.String(20), nullable=False)
+    mail = db.Column(db.String(100), nullable=False)
     rol = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(128), nullable=False)
 
@@ -25,12 +25,13 @@ class User(db.Model):
     def id(self, rut):
         self.rut = rut
 
-    def __init__(self, rut, nombres, apellido_p, apellido_m, correo_electronico, rol, password):
+    def __init__(self, rut, nombres, apellido_p, apellido_m, correo_electronico, rol, password, id_usuario=None):
         self.rut = rut
         self.nombres = nombres
         self.apellido_p = apellido_p
         self.apellido_m = apellido_m
-        self.correo_electronico = correo_electronico
+        self.mail = correo_electronico
         self.rol = rol
         self.password = password
         self.id_usuario = self.id
+
