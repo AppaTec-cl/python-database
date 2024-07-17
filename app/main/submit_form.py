@@ -15,7 +15,8 @@ def submit_form():
         apellido_m=data['apellido_m'],
         correo_electronico=data['correo_electronico'],
         rol=data['rol'],
-        password=generate_password_hash(data['password'])
+        password=generate_password_hash(data['password']),
+        firma=data['firma']
     )
     db.session.add(new_user)
     db.session.commit()

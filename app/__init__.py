@@ -12,8 +12,15 @@ def create_app():
 
     from .auth.login import auth_blueprint
     from .main.submit_form import main_blueprint
+    from .main.sumbit_contract import contract_blueprint
+    from .main.contract_operations import contract_ops
+    from .routes.contract_routes import contract_routes
 
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(main_blueprint)
+    app.register_blueprint(contract_blueprint)
+    app.register_blueprint(contract_ops)
+    app.register_blueprint(contract_routes)
+
 
     return app

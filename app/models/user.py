@@ -12,6 +12,7 @@ class User(db.Model):
     mail = db.Column(db.String(100), nullable=False)
     rol = db.Column(db.String(50), nullable=False)
     password = db.Column(db.String(128), nullable=False)
+    firma = db.Column(db.String(500), nullable=True)
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
@@ -25,7 +26,7 @@ class User(db.Model):
     def id(self, rut):
         self.rut = rut
 
-    def __init__(self, rut, nombres, apellido_p, apellido_m, correo_electronico, rol, password, id_usuario=None):
+    def __init__(self, rut, nombres, apellido_p, apellido_m, correo_electronico, rol, password, firma, id_usuario=None):
         self.rut = rut
         self.nombres = nombres
         self.apellido_p = apellido_p
@@ -33,5 +34,6 @@ class User(db.Model):
         self.mail = correo_electronico
         self.rol = rol
         self.password = password
+        self.firma = firma
         self.id_usuario = self.id
 
