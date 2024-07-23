@@ -1,5 +1,5 @@
 from flask import Flask
-from flasksqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
