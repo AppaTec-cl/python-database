@@ -1,5 +1,5 @@
 from .. import db
-from werkzeug.security import check_password_hash
+import bcrypt
 from sqlalchemy.ext.hybrid import hybrid_property
 
 class User(db.Model):
@@ -15,7 +15,7 @@ class User(db.Model):
     firma = db.Column(db.String(500), nullable=True)
 
     def check_password(self, password):
-        return check_password_hash(self.password, password)
+        return bcrypt.checkpw(password.encode('utf-8'), self.password)
     
     @hybrid_property
     def id(self):

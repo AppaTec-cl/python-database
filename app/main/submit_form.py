@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from ..models.user import User
 from .. import db
-from werkzeug.security import generate_password_hash
+import bcrypt
 
 main_blueprint = Blueprint('main', __name__)
 
@@ -15,9 +15,14 @@ def submit_form():
         apellido_m=data['apellido_m'],
         correo_electronico=data['correo_electronico'],
         rol=data['rol'],
-        password=generate_password_hash(data['password']),
+        password=hash_password_bcrypt(data['password']),
         firma=data['firma']
     )
     db.session.add(new_user)
     db.session.commit()
     return jsonify({'message': 'Usuario creado exitosamente', 'user_id': new_user.id_usuario}), 201
+
+def hash_password_bcrypt(password):
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+    return hashed

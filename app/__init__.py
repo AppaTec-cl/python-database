@@ -1,11 +1,12 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://appa:AppaTec0306@34.176.56.6/GestorContrato'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://{CLOUD_SQL_USER}:{CLOUD_SQL_PASSWORD}@127.0.0.1:3306/{CLOUD_SQL_DATABASE}'.format(**os.environ)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
@@ -21,5 +22,9 @@ def create_app():
     app.register_blueprint(contract_blueprint)
     app.register_blueprint(contract_ops)
     app.register_blueprint(contract_routes)
+
+    @app.route('/')
+    def index():
+        return "Hello, AppaTec!"
 
     return app
