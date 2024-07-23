@@ -22,5 +22,4 @@ def create_app():
     app.register_blueprint(contract_ops)
     app.register_blueprint(contract_routes)
 
-
     return app
