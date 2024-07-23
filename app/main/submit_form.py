@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from ..models.user import User
 from .. import db
 import bcrypt
+import base64
 
 main_blueprint = Blueprint('main', __name__)
 
@@ -25,4 +26,4 @@ def submit_form():
 def hash_password_bcrypt(password):
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
-    return hashed
+    return base64.b64encode(hashed).decode('utf-8')

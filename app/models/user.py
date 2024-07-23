@@ -1,5 +1,6 @@
 from .. import db
 import bcrypt
+import base64
 from sqlalchemy.ext.hybrid import hybrid_property
 
 class User(db.Model):
@@ -15,7 +16,8 @@ class User(db.Model):
     firma = db.Column(db.String(500), nullable=True)
 
     def check_password(self, password):
-        return bcrypt.checkpw(password.encode('utf-8'), self.password)
+        hashed_password_bytes = base64.b64decode(self.password.encode('utf-8'))
+        return bcrypt.checkpw(password.encode('utf-8'), hashed_password_bytes)
     
     @hybrid_property
     def id(self):
