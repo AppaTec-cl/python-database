@@ -20,7 +20,7 @@ class User(db.Model):
     @hybrid_property
     def id(self):
         numeric_part = self.rut.split('-')[0]
-        return int(numeric_part[-6:])
+        return str(numeric_part[-6:])
     
     @id.setter
     def id(self, rut):
