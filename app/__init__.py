@@ -1,9 +1,9 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flasksqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-def create_app():
+def createapp():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://appa:AppaTec0306@34.176.56.6/GestorContrato'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -21,5 +21,9 @@ def create_app():
     app.register_blueprint(contract_blueprint)
     app.register_blueprint(contract_ops)
     app.register_blueprint(contract_routes)
+
+    @app.route('/')
+    def index():
+        return "Hello, AppaTec!"
 
     return app
