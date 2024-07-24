@@ -1,27 +1,14 @@
-from flask import Blueprint, request, jsonify
-from flask_mail import Message, Mail
+rom flask import Blueprint, request, jsonify
+from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer
 from ..models.user import User
-from .. import db
+from .. import db, recovery_mail
 import bcrypt
 import base64
-import os
 
 recover_password_blueprint = Blueprint('recover_password', __name__)
 
 serializer = URLSafeTimedSerializer('d672ba239be9fe35fe94f36e99717616af745a9c994b08372de4abd262b06228')  # Usa tu propia clave secreta
-
-recovery_mail = Mail()
-def setup_recovery_mail(app):
-    app.config['MAIL_SERVER'] = 'smtp.zoho.com'
-    app.config['MAIL_PORT'] = 587
-    app.config['MAIL_USE_TLS'] = True
-    app.config['MAIL_USE_SSL'] = False
-    app.config['MAIL_USERNAME'] = os.environ.get('RECOVERY_EMAIL_USER')
-    app.config['MAIL_PASSWORD'] = os.environ.get('RECOVERY_EMAIL_PASS')
-    app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('RECOVERY_EMAIL_USER')
-    recovery_mail.init_app(app)
-setup_recovery_mail(create_app())
 
 @recover_password_blueprint.route('/request_reset', methods=['POST'])
 def request_reset():
@@ -44,7 +31,6 @@ def request_reset():
 
         msg = Message(subject, recipients=[user.mail])
         msg.body = body
-        msg.sender = os.environ.get('RECOVERY_EMAIL_USER')  
         recovery_mail.send(msg)
 
         return jsonify({"message": "Se ha enviado un correo electrónico con instrucciones para restablecer su contraseña"}), 200
