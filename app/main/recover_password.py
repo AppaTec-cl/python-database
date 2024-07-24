@@ -16,13 +16,12 @@ def request_reset():
 
     if user:
         token = serializer.dumps(user.rut, salt='password-reset-salt')
-        reset_url = f'http://yourfrontend.com/reset_password/{token}'
 
         subject = "Recuperación de Contraseña"
         body = (
             f"Estimado {user.nombres},\n\n"
-            f"Ha solicitado restablecer su contraseña. Haga clic en el siguiente enlace para restablecer su contraseña:\n"
-            f"{reset_url}\n\n"
+            f"Ha solicitado restablecer su contraseña. Use el siguiente token para restablecer su contraseña:\n"
+            f"{token}\n\n"
             "Si no solicitó este cambio, puede ignorar este correo.\n\n"
             "Saludos cordiales,\n"
             "El Equipo de AppaTec"
