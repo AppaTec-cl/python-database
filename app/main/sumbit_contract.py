@@ -1,8 +1,9 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify                            
 from flask_mail import Message
 from ..models.contract import Contract
 from ..models.creations_record import CreationRecord
 from ..models.content_contract import Contenido_Contrato
+from ..models.users import User 
 from .. import db, mail
 
 contract_blueprint = Blueprint('contract', __name__)
