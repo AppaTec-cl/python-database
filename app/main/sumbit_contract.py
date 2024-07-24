@@ -51,6 +51,10 @@ def submit_contract():
 
     db.session.commit()
 
+    # Obtener correos de los usuarios con rol "Gerente"
+    gerentes = User.query.filter_by(rol='Gerente').all()
+    gerente_emails = [gerente.mail for gerente in gerentes]
+    
     # Enviar correos a los destinatarios
     email_recipients = data.get('email_recipients', [])
     subject = data.get('email_subject', 'Nuevo Contrato Creado')
