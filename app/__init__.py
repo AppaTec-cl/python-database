@@ -46,6 +46,7 @@ def create_app():
     from .main.contract_operations import contract_ops
     from .routes.contract_routes import contract_routes
     from .routes.contract_all import contract_all_routes
+    from .routes.contract_by_rut import contract_by_rut
     from .main.recover_password import recover_password_blueprint
 
     app.register_blueprint(auth_blueprint)
@@ -54,6 +55,7 @@ def create_app():
     app.register_blueprint(contract_ops)
     app.register_blueprint(contract_routes)
     app.register_blueprint(contract_all_routes)
+    app.register_blueprint(contract_by_rut)
     app.register_blueprint(recover_password_blueprint)
 
 
