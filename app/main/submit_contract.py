@@ -58,9 +58,15 @@ def submit_contract():
 
     if gerente_emails:  # Asegurarse de que la lista de correos no esté vacía
         # Enviar correos a los gerentes
-        subject = data.get('email_subject', 'Nuevo Contrato Creado')
+        subject = data.get('email_subject', 'Estimado Gerente: Se ha generado un nuevo contrato')
         # Uso de f-strings para formatear la cadena de texto
-        body = data.get('email_body', f'Se ha creado un nuevo contrato. \n{new_contract.contrato}')
+        body = (
+            "Estimado Gerente,\n\n"
+            "Nos complace informarle que se ha generado un nuevo contrato. "
+            "Puede descargar el contrato en formato PDF presionando el siguiente enlace:\n\n"
+            f"{new_contract.contrato}\n\n"
+            "Saludos cordiales,\n"
+            "El Equipo de AppaTec"
 
 
         msg = Message(subject, recipients=gerente_emails)
