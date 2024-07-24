@@ -39,6 +39,7 @@ def create_app():
     CORS(app)
     db.init_app(app)
     mail.init_app(app)
+    recovery_mail.init_app(app)
 
     from .auth.login import auth_blueprint
     from .main.submit_form import main_blueprint
