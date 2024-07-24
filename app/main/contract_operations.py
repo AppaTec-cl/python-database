@@ -22,8 +22,10 @@ def update_contract(contract_id):
             if gerente_general_emails:
                 subject = "Contrato Actualizado"
                 body = (
-                    "Estimado Gerente General,\n\n"
-                    "El contrato con ID {contract_id} ha sido revisado y validado por el gerente.\n\n"
+                    f"Estimado Gerente General,\n\n"
+                    f"El contrato del empleado {contract.nombres} con RUT {contract.rut} ha sido actualizado y revisado por el gerente.\n"
+                    f"Puede descargar el contrato en formato PDF presionando el siguiente enlace:\n"
+                    f"{contract.contrato}\n\n"
                     "Saludos cordiales,\n"
                     "El Equipo de AppaTec"
                 )
@@ -56,8 +58,8 @@ def reject_contract(contract_id):
             if gerente_general_emails:
                 subject = "Contrato Rechazado"
                 body = (
-                    "Estimado Gerente General,\n\n"
-                    "El contrato con ID {contract_id} ha sido rechazado por el gerente con el siguiente comentario:\n"
+                    f"Estimado Gerente General,\n\n"
+                    f"El contrato del empleado {contract.nombres} con RUT {contract.rut} ha sido rechazado por el gerente con el siguiente comentario:\n"
                     f"{comentario}\n\n"
                     "Saludos cordiales,\n"
                     "El Equipo de AppaTec"
