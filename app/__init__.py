@@ -19,12 +19,13 @@ def create_app():
     from .main.sumbit_contract import contract_blueprint
     from .main.contract_operations import contract_ops
     from .routes.contract_routes import contract_routes
+    from .routes.contract_all import contract_all_routes
 
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(main_blueprint)
     app.register_blueprint(contract_blueprint)
     app.register_blueprint(contract_ops)
-    app.register_blueprint(contract_routes)
+    app.register_blueprint(contract_all_routes)
 
     @app.route('/')
     def index():
