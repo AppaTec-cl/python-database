@@ -44,6 +44,7 @@ def request_reset():
 
         msg = Message(subject, recipients=[user.mail])
         msg.body = body
+        msg.sender = os.environ.get('RECOVERY_EMAIL_USER')  
         recovery_mail.send(msg)
 
         return jsonify({"message": "Se ha enviado un correo electrónico con instrucciones para restablecer su contraseña"}), 200
