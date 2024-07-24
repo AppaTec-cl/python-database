@@ -26,7 +26,7 @@ def create_app():
 
     from .auth.login import auth_blueprint
     from .main.submit_form import main_blueprint
-    from .main.sumbit_contract import contract_blueprint
+    from .main.submit_contract import contract_blueprint
     from .main.contract_operations import contract_ops
     from .routes.contract_routes import contract_routes
     from .routes.contract_all import contract_all_routes
