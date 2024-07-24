@@ -4,6 +4,7 @@ from itsdangerous import URLSafeTimedSerializer
 from ..models.user import User
 from .. import db, recovery_mail
 import bcrypt
+import base64
 
 recover_password_blueprint = Blueprint('recover_password', __name__)
 
