@@ -61,8 +61,8 @@ def submit_contract():
         subject = data.get('email_subject', 'Estimado Gerente: Se ha generado un nuevo contrato')
         # Uso de f-strings para formatear la cadena de texto
         body = (
-            "Estimado Gerente,\n\n"
-            "Nos complace informarle que se ha generado un nuevo contrato. "
+            f"Estimado Gerente,\n\n"
+            f"Nos complace informarle que se ha generado un nuevo contrato para el empleado {new_content.nombres} {new_content.apellidos} con RUT {new_content.rut}.\n"
             "Puede descargar el contrato en formato PDF presionando el siguiente enlace:\n\n"
             f"{new_contract.contrato}\n\n"
             "Saludos cordiales,\n"
