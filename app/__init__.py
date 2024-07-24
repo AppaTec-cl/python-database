@@ -13,7 +13,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{CLOUD_SQL_USER}:{CLOUD_SQL_PASSWORD}@127.0.0.1:3306/{CLOUD_SQL_DATABASE}'.format(**os.environ)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    CORS(app)
+
 # Configuración de Flask-Mail para Zoho
     app.config['MAIL_SERVER'] = 'smtp.zoho.com'
     app.config['MAIL_PORT'] = 587
@@ -22,7 +22,11 @@ def create_app():
     app.config['MAIL_USERNAME'] = os.environ.get('ZOHO_EMAIL_USER')
     app.config['MAIL_PASSWORD'] = os.environ.get('ZOHO_EMAIL_PASS')
     app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('ZOHO_EMAIL_USER')
+
+    # Inicialización de extensiones
+    CORS(app)
     db.init_app(app)
+    mail.init_app(app)
 
     from .auth.login import auth_blueprint
     from .main.submit_form import main_blueprint
