@@ -1,8 +1,9 @@
 from flask import Blueprint, request, jsonify
+from flask_mail import Message
 from ..models.contract import Contract
 from ..models.creations_record import CreationRecord
 from ..models.content_contract import Contenido_Contrato
-from .. import db
+from .. import db, mail
 
 contract_blueprint = Blueprint('contract', __name__)
 
@@ -49,6 +50,16 @@ def submit_contract():
         db.session.add(new_creation_record)
 
     db.session.commit()
+
+    # Enviar correos a los destinatarios
+    email_recipients = data.get('email_recipients', [])
+    subject = data.get('email_subject', 'Nuevo Contrato Creado')
+    body = data.get('email_body', 'Se adjunta el nuevo contrato creado.')
+
+    msg = Message(subject, recipients=email_recipients)
+    msg.body = body
+    mail.send(msg)
+
     return jsonify({
         "contract": new_contract.to_dict(),
         "content": new_content.to_dict()
