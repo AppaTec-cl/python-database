@@ -14,7 +14,7 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
-# Configuración de Flask-Mail para Zoho
+    # Configuración de Flask-Mail para Zoho
     app.config['MAIL_SERVER'] = 'smtp.zoho.com'
     app.config['MAIL_PORT'] = 587
     app.config['MAIL_USE_TLS'] = True
@@ -23,6 +23,15 @@ def create_app():
     app.config['MAIL_PASSWORD'] = os.environ.get('ZOHO_EMAIL_PASS')
     app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('ZOHO_EMAIL_USER')
 
+    # Configuración específica para recuperación de contraseñas
+    app.config['RECOVERY_MAIL_SERVER'] = 'smtp.zoho.com'
+    app.config['RECOVERY_MAIL_PORT'] = 587
+    app.config['RECOVERY_MAIL_USE_TLS'] = True
+    app.config['RECOVERY_MAIL_USE_SSL'] = False
+    app.config['RECOVERY_MAIL_USERNAME'] = os.environ.get('RECOVERY_EMAIL_USER')
+    app.config['RECOVERY_MAIL_PASSWORD'] = os.environ.get('RECOVERY_EMAIL_PASS')
+    app.config['RECOVERY_MAIL_DEFAULT_SENDER'] = os.environ.get('RECOVERY_EMAIL_USER')
+    
     # Inicialización de extensiones
     CORS(app)
     db.init_app(app)
@@ -34,6 +43,7 @@ def create_app():
     from .main.contract_operations import contract_ops
     from .routes.contract_routes import contract_routes
     from .routes.contract_all import contract_all_routes
+    from .main.recover_password import recover_password_blueprint
 
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(main_blueprint)
@@ -41,6 +51,8 @@ def create_app():
     app.register_blueprint(contract_ops)
     app.register_blueprint(contract_routes)
     app.register_blueprint(contract_all_routes)
+    app.register_blueprint(recover_password_blueprint)
+
 
     @app.route('/')
     def index():
