@@ -55,18 +55,19 @@ def submit_contract():
     # Obtener correos de los usuarios con rol "Gerente"
     gerentes = User.query.filter_by(rol='Gerente').all()
     gerente_emails = [gerente.mail for gerente in gerentes]
-    
-    # Enviar correos a los destinatarios
-    email_recipients = data.get('email_recipients', [])
-    subject = data.get('email_subject', 'Nuevo Contrato Creado')
-    body = data.get('email_body', 'Se adjunta el nuevo contrato creado.')
 
-    msg = Message(subject, recipients=email_recipients)
-    msg.body = body
-    mail.send(msg)
+    if gerente_emails:  # Asegurarse de que la lista de correos no esté vacía
+        # Enviar correos a los gerentes
+        subject = data.get('email_subject', 'Nuevo Contrato Creado')
+        body = data.get('email_body', 'Se ha creado un nuevo contrato.')
+
+        msg = Message(subject, recipients=gerente_emails)
+        msg.body = body
+        mail.send(msg)
+    else:
+        print("No hay gerentes en la base de datos para enviar correos")
 
     return jsonify({
         "contract": new_contract.to_dict(),
         "content": new_content.to_dict()
     }), 201
-
