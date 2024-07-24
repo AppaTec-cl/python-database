@@ -5,6 +5,7 @@ from ..models.user import User
 from .. import db, mail
 import bcrypt
 import base64
+import os
 
 recover_password_blueprint = Blueprint('recover_password', __name__)
 
