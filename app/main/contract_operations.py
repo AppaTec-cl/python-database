@@ -1,8 +1,8 @@
-
 from flask import Blueprint, jsonify, request
+from flask_mail import Message
 from ..models.contract import Contract
 from ..models.user import User
-from .. import db
+from .. import db, mail
 
 contract_ops = Blueprint('contract_ops', __name__)
 
@@ -14,6 +14,24 @@ def update_contract(contract_id):
             contract.estado = "Revisado"
             contract.revision_gerente = 1
             db.session.commit()
+            
+            # Obtener correos de los usuarios con rol "Gerente General"
+            gerentes_generales = User.query.filter_by(rol='Gerente General').all()
+            gerente_general_emails = [gerente.mail for gerente in gerentes_generales]
+
+            if gerente_general_emails:
+                subject = "Contrato Actualizado"
+                body = (
+                    "Estimado Gerente General,\n\n"
+                    "El contrato con ID {contract_id} ha sido revisado y validado por el gerente.\n\n"
+                    "Saludos cordiales,\n"
+                    "El Equipo de AppaTec"
+                )
+
+                msg = Message(subject, recipients=gerente_general_emails)
+                msg.body = body
+                mail.send(msg)
+            
             return jsonify({"message": "Contrato actualizado exitosamente"}), 200
         else:
             return jsonify({"error": "Contrato no encontrado"}), 404
@@ -30,6 +48,25 @@ def reject_contract(contract_id):
             contract.revision_gerente = 0
             contract.comentario = comentario  # Establecer el comentario del gerente
             db.session.commit()
+            
+            # Obtener correos de los usuarios con rol "Gerente General"
+            gerentes_generales = User.query.filter_by(rol='Gerente General').all()
+            gerente_general_emails = [gerente.mail for gerente in gerentes_generales]
+
+            if gerente_general_emails:
+                subject = "Contrato Rechazado"
+                body = (
+                    "Estimado Gerente General,\n\n"
+                    "El contrato con ID {contract_id} ha sido rechazado por el gerente con el siguiente comentario:\n"
+                    f"{comentario}\n\n"
+                    "Saludos cordiales,\n"
+                    "El Equipo de AppaTec"
+                )
+
+                msg = Message(subject, recipients=gerente_general_emails)
+                msg.body = body
+                mail.send(msg)
+            
             return jsonify({"message": "Contrato rechazado exitosamente"}), 200
         else:
             return jsonify({"error": "Contrato no encontrado"}), 404
