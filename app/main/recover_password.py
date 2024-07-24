@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer
 from ..models.user import User
-from .. import db, recovery_mail
+from .. import db, mail
 import bcrypt
 import base64
 
@@ -32,7 +32,7 @@ def request_reset():
         msg = Message(subject, recipients=[user.mail])
         msg.body = body
         msg.sender = os.environ.get('RECOVERY_EMAIL_USER')
-        recovery_mail.send(msg)
+        mail.send(msg)
 
         return jsonify({"message": "Se ha enviado un correo electrónico con instrucciones para restablecer su contraseña"}), 200
     else:
