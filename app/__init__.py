@@ -7,6 +7,7 @@ import os
 
 db = SQLAlchemy()
 mail = Mail()
+recovery_mail = Mail()
 
 def create_app():
     app = Flask(__name__)
