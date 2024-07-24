@@ -67,7 +67,7 @@ def submit_contract():
             f"{new_contract.contrato}\n\n"
             "Saludos cordiales,\n"
             "El Equipo de AppaTec"
-
+        )
 
         msg = Message(subject, recipients=gerente_emails)
         msg.body = body
