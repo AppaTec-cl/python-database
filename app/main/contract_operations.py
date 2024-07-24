@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_mail import Message
 from ..models.contract import Contract
 from ..models.user import User
+from ..models.content_contract import Contenido_Contrato
 from .. import db, mail
 
 contract_ops = Blueprint('contract_ops', __name__)
@@ -10,7 +11,8 @@ contract_ops = Blueprint('contract_ops', __name__)
 def update_contract(contract_id):
     try:
         contract = Contract.query.filter_by(id_contrato=contract_id).first()
-        if contract:
+        content_contract = Contenido_Contrato.query.filter_by(id_contrato=contract_id).first()
+        if contract and content_contract:
             contract.estado = "Revisado"
             contract.revision_gerente = 1
             db.session.commit()
@@ -23,7 +25,7 @@ def update_contract(contract_id):
                 subject = "Contrato Actualizado"
                 body = (
                     f"Estimado Gerente General,\n\n"
-                    f"El contrato del empleado {contract.nombres} con RUT {contract.rut} ha sido actualizado y revisado por el gerente.\n"
+                    f"El contrato del empleado {content_contract.nombres} {content_contract.apellidos} con RUT {content_contract.rut} ha sido actualizado y revisado por el gerente.\n"
                     f"Puede descargar el contrato en formato PDF presionando el siguiente enlace:\n"
                     f"{contract.contrato}\n\n"
                     "Saludos cordiales,\n"
@@ -36,7 +38,7 @@ def update_contract(contract_id):
             
             return jsonify({"message": "Contrato actualizado exitosamente"}), 200
         else:
-            return jsonify({"error": "Contrato no encontrado"}), 404
+            return jsonify({"error": "Contrato o contenido del contrato no encontrado"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -45,7 +47,8 @@ def reject_contract(contract_id):
     comentario = request.json.get('comentario', '')  # Obtener el comentario del request
     try:
         contract = Contract.query.filter_by(id_contrato=contract_id).first()
-        if contract:
+        content_contract = Contenido_Contrato.query.filter_by(id_contrato=contract_id).first()
+        if contract and content_contract:
             contract.estado = "Revisado"
             contract.revision_gerente = 0
             contract.comentario = comentario  # Establecer el comentario del gerente
@@ -59,7 +62,7 @@ def reject_contract(contract_id):
                 subject = "Contrato Rechazado"
                 body = (
                     f"Estimado Gerente General,\n\n"
-                    f"El contrato del empleado {contract.nombres} con RUT {contract.rut} ha sido rechazado por el gerente con el siguiente comentario:\n"
+                    f"El contrato del empleado {content_contract.nombres} {content_contract.apellidos} con RUT {content_contract.rut} ha sido rechazado por el gerente con el siguiente comentario:\n"
                     f"{comentario}\n\n"
                     "Saludos cordiales,\n"
                     "El Equipo de AppaTec"
@@ -71,7 +74,7 @@ def reject_contract(contract_id):
             
             return jsonify({"message": "Contrato rechazado exitosamente"}), 200
         else:
-            return jsonify({"error": "Contrato no encontrado"}), 404
+            return jsonify({"error": "Contrato o contenido del contrato no encontrado"}), 404
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
