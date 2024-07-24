@@ -1,4 +1,4 @@
-rom flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer
 from ..models.user import User
