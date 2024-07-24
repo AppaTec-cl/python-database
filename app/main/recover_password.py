@@ -6,7 +6,7 @@ from .. import db, recovery_mail
 
 recover_password_blueprint = Blueprint('recover_password', __name__)
 
-serializer = URLSafeTimedSerializer('SECRET_KEY')  # Usa tu propia clave secreta
+serializer = URLSafeTimedSerializer('d672ba239be9fe35fe94f36e99717616af745a9c994b08372de4abd262b06228')  # Usa tu propia clave secreta
 
 @recover_password_blueprint.route('/request_reset', methods=['POST'])
 def request_reset():
