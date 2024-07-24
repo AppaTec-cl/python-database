@@ -12,7 +12,9 @@ def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://{CLOUD_SQL_USER}:{CLOUD_SQL_PASSWORD}@127.0.0.1:3306/{CLOUD_SQL_DATABASE}'.format(**os.environ)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+    
+    # Agregar la SECRET_KEY
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
     # Configuración de Flask-Mail para Zoho
     app.config['MAIL_SERVER'] = 'smtp.zoho.com'
