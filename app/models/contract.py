@@ -7,7 +7,6 @@ class Contract(db.Model):
     __tablename__ = 'CONTRATO'
 
     id_contrato = Column(String(6), primary_key=True)
-    tipo_contrato = Column(String(50), nullable=False, default="Definido")
     fecha_inicio = Column(String(50), nullable=False)
     fecha_expiracion = Column(String(50), nullable=True)
     comentario = Column(Text, nullable=True)
@@ -20,7 +19,6 @@ class Contract(db.Model):
 
     def __init__(self, fecha_inicio, fecha_expiracion, comentario, contrato):
         self.id_contrato = self.generate_unique_id()
-        self.tipo_contrato = "Definido"
         self.fecha_inicio = fecha_inicio
         self.fecha_expiracion = fecha_expiracion
         self.comentario = comentario
@@ -39,7 +37,6 @@ class Contract(db.Model):
     def to_dict(self):
         return {
             "id_contrato": self.id_contrato,
-            "tipo_contrato": self.tipo_contrato,
             "fecha_inicio": self.fecha_inicio,
             "fecha_expiracion": self.fecha_expiracion,
             "comentario": self.comentario,
