@@ -7,7 +7,7 @@ import os
 
 db = SQLAlchemy()
 mail = Mail()
-
+recovery_mail = Mail()
 
 def create_app():
     app = Flask(__name__)
@@ -17,7 +17,7 @@ def create_app():
     # Agregar la SECRET_KEY
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
-    # Configuración de Flask-Mail para correos normales
+    # Configuración de Flask-Mail para Zoho
     app.config['MAIL_SERVER'] = 'smtp.zoho.com'
     app.config['MAIL_PORT'] = 587
     app.config['MAIL_USE_TLS'] = True
@@ -57,6 +57,7 @@ def create_app():
     app.register_blueprint(contract_all_routes)
     app.register_blueprint(contract_by_rut)
     app.register_blueprint(recover_password_blueprint)
+
 
     @app.route('/')
     def index():
