@@ -26,6 +26,7 @@ def create_app():
     app.register_blueprint(main_blueprint)
     app.register_blueprint(contract_blueprint)
     app.register_blueprint(contract_ops)
+    app.register_blueprint(contract_routes)
     app.register_blueprint(contract_all_routes)
 
     @app.route('/')
