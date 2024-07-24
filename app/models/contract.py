@@ -25,6 +25,8 @@ class Contract(db.Model):
         self.fecha_expiracion = fecha_expiracion
         self.comentario = comentario
         self.estado = 'No Revisado'
+        self.revision_gerente = revision_gerente
+        self.revision_gerente_general = revision_gerente_general
         self.contrato = contrato
 
     @staticmethod
