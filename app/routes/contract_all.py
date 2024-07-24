@@ -5,7 +5,7 @@ from .. import db
 
 contract_all_routes = Blueprint('contract_all_routes', __name__)
 
-@contract_all_routes.route('/get_contracts', methods=['GET'])
+@contract_all_routes.route('/get_contracts_all', methods=['GET'])
 def get_contracts(status):
     try:
         contracts = db.session.query(
